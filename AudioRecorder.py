@@ -1,101 +1,48 @@
-import matplotlib
-
-matplotlib.use('TkAgg')  # <-- THIS MAKES IT FAST!
+#import matplotlib
+#matplotlib.use('TkAgg')  # <-- THIS MAKES IT FAST!
 import numpy
 import pyaudio
 import threading
 import time
 
 
-class MyRecorder:
-    """Simple, cross-platform class to record from the microphone."""
-
-    def __init__(self):
-        """minimal garb is executed when class is loaded."""
-        self.RATE = 48100
-        self.BUFFERSIZE = 2 ** 12  # 1024 is a good buffer size
-        self.secToRecord = .1
-        self.threadsDieNow = False
+class AudioRecorder:
+    def __init__(self, recording_time):
         self.newAudio = False
-        self.setup()
-
-
-    def setup(self):
-        """initialize sound card."""
-        # TODO - windows detection vs. alsa or something for linux
-        # TODO - try/except for sound card selection/initiation
-
-        self.buffersToRecord = int(self.RATE * self.secToRecord / self.BUFFERSIZE)
-        if self.buffersToRecord == 0:
-            self.buffersToRecord = 1
-        self.samplesToRecord = int(self.BUFFERSIZE * self.buffersToRecord)
-        self.chunksToRecord = int(self.samplesToRecord / self.BUFFERSIZE)
-        self.secondsPerPoint = 1.0 / self.RATE
-
-        self.pyAudio = pyaudio.PyAudio()
-        self.sound_card = self.pyAudio.open(format=pyaudio.paInt16, channels=1, rate=self.RATE, input=True,
-                                            frames_per_buffer=self.BUFFERSIZE)
-        ### TODO Jorge: Borrar las variables que no se usan para nada.
-        self.xsBuffer = numpy.arange(self.BUFFERSIZE) * self.secondsPerPoint
-        self.xs = numpy.arange(self.chunksToRecord * self.BUFFERSIZE) * self.secondsPerPoint
+        self.RATE = 48100
+        self.BUFFER_SIZE = 1024 #= 2 ** 12
+        self.secToRecord = .1
         self.audio = []
+        self.py_audio = pyaudio.PyAudio()
+        self.sound_card = self.py_audio.open(format=pyaudio.paInt16, channels=1, rate=self.RATE, input=True,
+                                             frames_per_buffer=self.BUFFER_SIZE)
+        self.recording_is_stopped = True
+        self.recording_time = recording_time
 
     def release_sound_card(self):
-        """cleanly back out and release sound card."""
-        self.pyAudio.close(self.sound_card)
+        self.py_audio.close(self.sound_card)
 
-    ### RECORDING AUDIO ###
-
-    def get_audio(self):
-        """get a single buffer size worth of audio."""
-        audio_string = self.sound_card.read(self.BUFFERSIZE)
+    def get_audio_with_buffer_size(self):
+        audio_string = self.sound_card.read(self.BUFFER_SIZE)
         return audio_string
-        ##return numpy.fromstring(audio_string, dtype=numpy.int16)
 
     def record(self):
-        self.t = threading.Thread(target=self.record_in_new_thread)
-        self.t.start()
-
+        self.recording_thread = threading.Thread(target=self.record_in_new_thread)
+        self.recording_thread.start()
+        #TODO UX: Show message to the user saying that thread should not be started when there another one running.
 
     def record_in_new_thread(self):
-        """record secToRecord seconds of audio."""
-        end_time = time.time() + 5
+        end_time = time.time() + self.recording_time
         self.audio = []
+        self.recording_is_stopped = False
         while end_time > time.time():
-            if self.threadsDieNow:
+            if self.recording_is_stopped:
                 break
-            self.audio.append(self.get_audio())
+            self.audio.append(self.get_audio_with_buffer_size())
             self.newAudio = True
         print("end of record")
 
-    def continuousEnd(self):
-        """shut down continuous recording."""
-        self.threadsDieNow = True
+    def stop_recording(self):
+        self.recording_is_stopped = True
 
-    ### MATH ###
-
-    def downsample(self, data, mult):
-        """Given 1D data, return the binned average."""
-        overhang = len(data) % mult
-        if overhang:
-            data = data[:-overhang]
-        data = numpy.reshape(data, (len(data) / mult, mult))
-        data = numpy.average(data, 1)
-        return data
-# This is the next method I need to look at, after the clean up and also after the put it in a good position.
-    def fft(self, data=None, trimBy=10, logScale=False, divBy=100):
-        if data == None:
-            data = self.audio.flatten()
-        left, right = numpy.split(numpy.abs(numpy.fft.fft(data)), 2)
-        ys = numpy.add(left, right[::-1])
-        if logScale:
-            ys = numpy.multiply(20, numpy.log10(ys))
-        xs = numpy.arange(self.BUFFERSIZE / 2, dtype=float)
-        if trimBy:
-            i = int((self.BUFFERSIZE / 2) / trimBy)
-            ys = ys[:i]
-            xs = xs[:i] * self.RATE / self.BUFFERSIZE
-        if divBy:
-            ys = ys / float(divBy)
-        return xs, ys
 

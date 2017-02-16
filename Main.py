@@ -8,7 +8,7 @@ from AudioRecorder import *
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
-    recorder = MyRecorder()
+    recorder = AudioRecorder(recording_time=5)
     player = MyPlayer(recorder)
     win_plot = ui_plot.QtGui.QMainWindow()
     uiplot = ui_plot.Ui_win_plot()

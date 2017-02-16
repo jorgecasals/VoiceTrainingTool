@@ -3,51 +3,42 @@ import numpy
 
 
 class MyPlayer:
-    ##TODO:First change into the class. We need some clean up here.
     def __init__(self, recorder):
         self.recorder = recorder
+        self.CHUNK = 1024
+        self.CHANNELS = 1
+        self.RATE = 48100
+        self.RECORD_SECONDS = 5
 
     def play_sound(self):
-        audio = self.recorder.audio
-        pyaudio_instace = pyaudio.PyAudio()
-        CHUNK = 1024
-        FORMAT = pyaudio.paInt16
-        CHANNELS = 1
-        RATE = 48100
-        RECORD_SECONDS = 5
-        audio_stream = pyaudio_instace.open(format=FORMAT,
-                                            channels=CHANNELS,
-                                            rate=RATE,
+        self.audio = self.recorder.audio
+        self.pyaudio_instace = pyaudio.PyAudio()
+        self.FORMAT = pyaudio.paInt16
+        self.audio_stream = self.pyaudio_instace.open(format=self.FORMAT,
+                                            channels=self.CHANNELS,
+                                            rate=self.RATE,
                                             output=True,
-                                            frames_per_buffer=CHUNK)
-        start_stream_index = 0
-        end_stream_index = CHUNK
-        audio_lenght = len(audio)
-        ##TODO: If there is a remainer part lower than a chunk it will not be played.
-        for audio_chunk in audio:
-            audio_stream.write(audio_chunk)
-            # start_stream_index += CHUNK
-            # end_stream_index += CHUNK
+                                            frames_per_buffer=self.CHUNK)
+        for audio_chunk in self.audio:
+            self.audio_stream.write(audio_chunk)
 
-        audio_stream.stop_stream()
-        audio_stream.close()
-
-        # close PyAudio
-        pyaudio_instace.terminate()
+        self.audio_stream.stop_stream()
+        self.audio_stream.close()
+        self.pyaudio_instace.terminate()
 
     def play_sound_with_tff_transforming(self):
-        audio = self.recorder.audio
-        pyaudio_instace = pyaudio.PyAudio()
-        CHUNK = 1024
-        FORMAT = pyaudio.paInt16
-        CHANNELS = 1
-        RATE = 48100
+        self.audio = self.recorder.audio
+        self.pyaudio_instace = pyaudio.PyAudio()
+        self.CHUNK = 1024
+        self.FORMAT = pyaudio.paInt16
+        self.CHANNELS = 1
+        self.RATE = 48100
         RECORD_SECONDS = 5
-        audio_stream = pyaudio_instace.open(format=FORMAT,
-                                            channels=CHANNELS,
-                                            rate=RATE,
+        audio_stream = self.pyaudio_instace.open(format=self.FORMAT,
+                                            channels=self.CHANNELS,
+                                            rate=self.RATE,
                                             output=True,
-                                            frames_per_buffer=CHUNK)
+                                            frames_per_buffer=self.CHUNK)
         data_unflatted = numpy.fromstring(self.recorder.audio, dtype=numpy.int16)
         numpy_data = numpy.empty_like(data_unflatted)
         numpy_data[:] = data_unflatted
@@ -61,14 +52,13 @@ class MyPlayer:
         while index <= len(real_recovered_data):
             data_slice = real_recovered_data[index - 4096:index]
             int_data_slice = []
-            for d in data_slice:
-                int_data_slice.append(int(round(d)))
+            for float_value in data_slice:
+                int_data_slice.append(int(round(float_value)))
             int_numpy_data_slice = numpy.array(int_data_slice, dtype=numpy.int16)
             audio_recovered.append(int_numpy_data_slice)
             index += 4096
 
-        ##TODO: If there is a remainer part lower than a chunk it will not be played.
-        ##audio_transformed_to_original = numpy.from
+        # audio_transformed_to_original = numpy.from
         for audio_chunk in audio_recovered:
             audio_stream.write(audio_chunk)
 
@@ -76,4 +66,4 @@ class MyPlayer:
         audio_stream.close()
 
         # close PyAudio
-        pyaudio_instace.terminate()
+        self.pyaudio_instace.terminate()
