@@ -1,11 +1,10 @@
-import ui_plot
 import sys
-import numpy
-from PyQt4 import QtCore, QtGui
-import PyQt4.Qwt5 as Qwt
-from AudioRecorder import *
-from AudioPlayer import *
 
+from PyQt4 import QtCore, QtGui
+
+import ui_plot
+from AudioPlayer import *
+from AudioRecorder import *
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
@@ -17,11 +16,6 @@ if __name__ == "__main__":
     uiplot.btnA.clicked.connect(recorder.record)
     uiplot.btnB.clicked.connect(player.play_sound)
     uiplot.btnC.clicked.connect(player.play_sound_with_tff_transforming)
-
-    # c = Qwt.QwtPlotCurve()
-    # c.attach(uiplot.qwtPlot)
-    #
-    # uiplot.qwtPlot.setAxisScale(uiplot.qwtPlot.yLeft, 0, 1000000)
 
     uiplot.timer = QtCore.QTimer()
     uiplot.timer.start(1.0)

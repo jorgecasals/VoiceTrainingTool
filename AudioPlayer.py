@@ -3,7 +3,7 @@ import numpy
 
 
 class MyPlayer:
-
+    ##TODO:First change into the class. We need some clean up here.
     def __init__(self, recorder):
         self.recorder = recorder
 
@@ -50,7 +50,7 @@ class MyPlayer:
                                             frames_per_buffer=CHUNK)
         data_unflatted = numpy.fromstring(self.recorder.audio, dtype=numpy.int16)
         numpy_data = numpy.empty_like(data_unflatted)
-        numpy_data[:]=data_unflatted
+        numpy_data[:] = data_unflatted
         data_flatted = numpy_data.flatten()
 
         fft_data = numpy.fft.fft(data_flatted)
@@ -63,7 +63,7 @@ class MyPlayer:
             int_data_slice = []
             for d in data_slice:
                 int_data_slice.append(int(round(d)))
-            int_numpy_data_slice = numpy.array(int_data_slice,dtype=numpy.int16)
+            int_numpy_data_slice = numpy.array(int_data_slice, dtype=numpy.int16)
             audio_recovered.append(int_numpy_data_slice)
             index += 4096
 
@@ -71,7 +71,6 @@ class MyPlayer:
         ##audio_transformed_to_original = numpy.from
         for audio_chunk in audio_recovered:
             audio_stream.write(audio_chunk)
-
 
         audio_stream.stop_stream()
         audio_stream.close()

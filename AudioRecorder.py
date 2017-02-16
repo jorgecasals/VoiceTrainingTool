@@ -2,12 +2,8 @@ import matplotlib
 
 matplotlib.use('TkAgg')  # <-- THIS MAKES IT FAST!
 import numpy
-import scipy
-import struct
 import pyaudio
 import threading
-import pylab
-import struct
 import time
 
 
@@ -86,7 +82,7 @@ class MyRecorder:
         data = numpy.reshape(data, (len(data) / mult, mult))
         data = numpy.average(data, 1)
         return data
-
+# This is the next method I need to look at, after the clean up and also after the put it in a good position.
     def fft(self, data=None, trimBy=10, logScale=False, divBy=100):
         if data == None:
             data = self.audio.flatten()
