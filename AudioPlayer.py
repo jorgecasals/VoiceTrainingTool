@@ -1,5 +1,6 @@
 import pyaudio
 import numpy
+from FurierTransformer import *
 
 
 class MyPlayer:
@@ -41,8 +42,12 @@ class MyPlayer:
         data_unflatted = self.convert_to_int16_array()
         numpy_data = numpy.empty_like(data_unflatted)
         numpy_data[:] = data_unflatted
-        data_flatted = numpy_data.flatten()
+        furier_transformer = FurierTransformer(self.CHUNK, 48100)
+        frequency,power = furier_transformer.get_frequency_power(numpy_data)
+        #alter the power of some ranges.
+        fft_reconstructed_data = furier_transformer.get_furier(frequency, power)
 
+        data_flatted = numpy_data.flatten()
         fft_data = numpy.fft.fft(data_flatted)
         recovered_data = numpy.fft.ifft(fft_data)
         real_recovered_data = numpy.real(recovered_data)
@@ -81,3 +86,19 @@ class MyPlayer:
             audio_string_array.append(string_audio)
         return audio_string_array
 
+
+
+    #import numpy as np
+    #import pylab as pl
+    #rate, data = wavfile.read('FILE.wav')
+    #t = np.arange(len(data[:, 0])) * 1.0 / rate
+    #pl.plot(t, data[:, 0])
+    #pl.show()
+
+
+    #p = 20 * np.log10(np.abs(np.fft.rfft(data[:2048, 0])))
+    #f = np.linspace(0, rate / 2.0, len(p))
+    #pl.plot(f, p)
+    #pl.xlabel("Frequency(Hz)")
+    #pl.ylabel("Power(dB)")
+    #pl.show()
