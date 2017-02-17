@@ -2,75 +2,31 @@ import pyaudio
 import numpy
 from FurierTransformer import *
 
-
+#TODO:Too much responsability, I'm going to move the fft to another class. This is just for reproduce purpose.
 class MyPlayer:
     def __init__(self, recorder):
         self.recorder = recorder
         self.CHUNK = 1024
         self.CHANNELS = 1
-        self.RATE = 48100
+        self.RATE = 44100
         self.RECORD_SECONDS = 5
 
     def play_sound(self):
         self.audio = self.recorder.audio
         self.pyaudio_instace = pyaudio.PyAudio()
         self.FORMAT = pyaudio.paInt16
-        self.audio_stream = self.pyaudio_instace.open(format=self.FORMAT,
-                                            channels=self.CHANNELS,
-                                            rate=self.RATE,
-                                            output=True,
-                                            frames_per_buffer=self.CHUNK)
-        for audio_chunk in self.audio:
-            self.audio_stream.write(audio_chunk)
+        self.play_audio(self.audio)
 
-        self.audio_stream.stop_stream()
-        self.audio_stream.close()
-        self.pyaudio_instace.terminate()
+
 
     def play_sound_with_tff_transforming(self):
         self.audio = self.recorder.audio
         self.pyaudio_instace = pyaudio.PyAudio()
-        self.CHUNK = 1024
         self.FORMAT = pyaudio.paInt16
-        self.CHANNELS = 1
-        self.RATE = 48100
-        audio_stream = self.pyaudio_instace.open(format=self.FORMAT,
-                                            channels=self.CHANNELS,
-                                            rate=self.RATE,
-                                            output=True,
-                                            frames_per_buffer=self.CHUNK)
-        data_unflatted = self.convert_to_int16_array()
-        numpy_data = numpy.empty_like(data_unflatted)
-        numpy_data[:] = data_unflatted
-        furier_transformer = FurierTransformer(self.CHUNK, 48100)
-        frequency,power = furier_transformer.get_frequency_power(numpy_data)
-        #alter the power of some ranges.
-        fft_reconstructed_data = furier_transformer.get_furier(frequency, power)
 
-        data_flatted = numpy_data.flatten()
-        fft_data = numpy.fft.fft(data_flatted)
-        recovered_data = numpy.fft.ifft(fft_data)
-        real_recovered_data = numpy.real(recovered_data)
-        audio_recovered = []
-        index = 4096
-        while index <= len(real_recovered_data):
-            data_slice = real_recovered_data[index - 4096:index]
-            int_data_slice = []
-            for float_value in data_slice:
-                int_data_slice.append(int(round(float_value)))
-            int_numpy_data_slice = numpy.array(int_data_slice, dtype=numpy.int16)
-            audio_recovered.append(int_numpy_data_slice)
-            index += 4096
-
-        audio_transformed_to_original = self.convert_to_string_array(audio_recovered)
-        for audio_chunk in audio_transformed_to_original:
-            audio_stream.write(audio_chunk)
-
-        audio_stream.stop_stream()
-        audio_stream.close()
-
-        # close PyAudio
-        self.pyaudio_instace.terminate()
+        furier_transformer = FurierTransformer(buffer_size=self.CHUNK, rate=self.RATE)
+        new_audio = furier_transformer.levelup_frecuencies(start_frequencies=3000, end_frequencies=4000, power_percentage=50, audio=self.audio)
+        self.play_audio(new_audio)
 
     def convert_to_int16_array(self):
         audio_int16_array = []
@@ -86,7 +42,15 @@ class MyPlayer:
             audio_string_array.append(string_audio)
         return audio_string_array
 
+    def play_audio(self, audio_to_play):
+        my_audio_stream = self.pyaudio_instace.open(format=self.FORMAT, channels=self.CHANNELS, rate=self.RATE,
+                                                      output=True, frames_per_buffer=self.CHUNK)
+        for audio_chunk in audio_to_play:
+            my_audio_stream.write(audio_chunk)
 
+        my_audio_stream.stop_stream()
+        my_audio_stream.close()
+        self.pyaudio_instace.terminate()
 
     #import numpy as np
     #import pylab as pl

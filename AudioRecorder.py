@@ -9,7 +9,7 @@ import time
 class AudioRecorder:
     def __init__(self, recording_time):
         self.newAudio = False
-        self.RATE = 48100
+        self.RATE = 44100
         self.BUFFER_SIZE = 1024 #= 2 ** 12
         self.secToRecord = .1
         self.audio = []
@@ -23,7 +23,7 @@ class AudioRecorder:
         self.py_audio.close(self.sound_card)
 
     def get_audio_with_buffer_size(self):
-        audio_string = self.sound_card.read(self.BUFFER_SIZE)
+        audio_string = self.sound_card.read(1024*8)
         return audio_string
 
     def record(self):
