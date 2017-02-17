@@ -33,13 +33,12 @@ class MyPlayer:
         self.FORMAT = pyaudio.paInt16
         self.CHANNELS = 1
         self.RATE = 48100
-        RECORD_SECONDS = 5
         audio_stream = self.pyaudio_instace.open(format=self.FORMAT,
                                             channels=self.CHANNELS,
                                             rate=self.RATE,
                                             output=True,
                                             frames_per_buffer=self.CHUNK)
-        data_unflatted = numpy.fromstring(self.recorder.audio, dtype=numpy.int16)
+        data_unflatted = self.convert_to_int16_array()
         numpy_data = numpy.empty_like(data_unflatted)
         numpy_data[:] = data_unflatted
         data_flatted = numpy_data.flatten()
@@ -58,8 +57,8 @@ class MyPlayer:
             audio_recovered.append(int_numpy_data_slice)
             index += 4096
 
-        # audio_transformed_to_original = numpy.from
-        for audio_chunk in audio_recovered:
+        audio_transformed_to_original = self.convert_to_string_array(audio_recovered)
+        for audio_chunk in audio_transformed_to_original:
             audio_stream.write(audio_chunk)
 
         audio_stream.stop_stream()
@@ -67,3 +66,18 @@ class MyPlayer:
 
         # close PyAudio
         self.pyaudio_instace.terminate()
+
+    def convert_to_int16_array(self):
+        audio_int16_array = []
+        for string_audio in self.audio:
+            int_audio = numpy.fromstring(string_audio, dtype=numpy.int16)
+            audio_int16_array.append(int_audio)
+        return audio_int16_array
+
+    def convert_to_string_array(self, audio_int16_array):
+        audio_string_array = []
+        for int16_audio in audio_int16_array:
+            string_audio = int16_audio.tostring()
+            audio_string_array.append(string_audio)
+        return audio_string_array
+

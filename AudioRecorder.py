@@ -1,5 +1,5 @@
-#import matplotlib
-#matplotlib.use('TkAgg')  # <-- THIS MAKES IT FAST!
+import matplotlib
+matplotlib.use('TkAgg')  # <-- THIS MAKES IT FAST!
 import numpy
 import pyaudio
 import threading
