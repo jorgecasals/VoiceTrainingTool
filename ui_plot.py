@@ -46,6 +46,9 @@ class Ui_win_plot(object):
         self.btnC = QtGui.QPushButton(self.centralwidget)
         self.btnC.setObjectName(_fromUtf8("btnC"))
         self.horizontalLayout.addWidget(self.btnC)
+        self.btnD = QtGui.QPushButton(self.centralwidget)
+        self.btnD.setObjectName(_fromUtf8("btnD"))
+        self.horizontalLayout.addWidget(self.btnD)
 
         self.verticalLayout.addLayout(self.horizontalLayout)
         win_plot.setCentralWidget(self.centralwidget)
@@ -57,7 +60,8 @@ class Ui_win_plot(object):
         win_plot.setWindowTitle(_translate("win_plot", "MainWindow", None))
         self.btnA.setText(_translate("win_plot", "Record", None))
         self.btnB.setText(_translate("win_plot", "Play", None))
-        self.btnC.setText(_translate("win_plot", "Play TFF", None))
+        self.btnC.setText(_translate("win_plot", "Play Level up", None))
+        self.btnD.setText(_translate("win_plot", "Move frequencies", None))
 
 
 from PyQt4 import Qwt5

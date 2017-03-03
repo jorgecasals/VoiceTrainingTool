@@ -35,19 +35,35 @@ class FurierTransformer:
         power_multiple = (100.0 + power_percentage)/100
         for audio_frame in audio:
             audio_int = numpy.fromstring(audio_frame, dtype=numpy.int16)
-            x, y = self.convert_to_frequency_level_pair(audio_frame)
-            reconverted_audio_frame = self.convert_to_audio(x, y)
-            # frequencies_level = numpy.fft.rfft(audio_int)
-            # frequencies_level *= power_multiple
-            # audio_complex = numpy.fft.irfft(frequencies_level)
-            # audio_float = numpy.real(audio_complex)
-            # numpy.fft.fre
-            # audio_int = []
-            # for float_value in audio_float:
-            #     audio_int.append(int(round(float_value)))
-            # audio_int16 = numpy.array(audio_int, dtype=numpy.int16)
-            # audio_string = audio_int16.tostring()
-            # audio_leveled_up.append(audio_string)
+            frequencies_level = numpy.fft.rfft(audio_int)
+            frequencies_level[start_frequencies:end_frequencies] *= power_multiple
+            audio_complex = numpy.fft.irfft(frequencies_level)
+            audio_float = numpy.real(audio_complex)
+            audio_int = []
+            for float_value in audio_float:
+                audio_int.append(int(round(float_value)))
+            audio_int16 = numpy.array(audio_int, dtype=numpy.int16)
+            audio_string = audio_int16.tostring()
+            audio_leveled_up.append(audio_string)
+        return audio_leveled_up
+
+    def clone_higher_frecuencies(self, source_start, source_end, audio):
+        audio_leveled_up = []
+        for audio_frame in audio:
+            audio_int = numpy.fromstring(audio_frame, dtype=numpy.int16)
+            frequencies_level = numpy.fft.rfft(audio_int)
+            audio_end = len(frequencies_level)
+            elements_to_switch = audio_end - source_end
+            new_end = source_start+elements_to_switch
+            frequencies_level[source_end:audio_end] = frequencies_level[source_start:new_end]
+            audio_complex = numpy.fft.irfft(frequencies_level)
+            audio_float = numpy.real(audio_complex)
+            audio_int = []
+            for float_value in audio_float:
+                audio_int.append(int(round(float_value)))
+            audio_int16 = numpy.array(audio_int, dtype=numpy.int16)
+            audio_string = audio_int16.tostring()
+            audio_leveled_up.append(audio_string)
         return audio_leveled_up
 
     def convert_to_int16_array(self, audio):

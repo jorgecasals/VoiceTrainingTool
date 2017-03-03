@@ -15,7 +15,8 @@ if __name__ == "__main__":
     uiplot.setupUi(win_plot)
     uiplot.btnA.clicked.connect(recorder.record)
     uiplot.btnB.clicked.connect(player.play_sound)
-    uiplot.btnC.clicked.connect(player.play_sound_with_tff_transforming)
+    uiplot.btnC.clicked.connect(player.play_sound_with_some_frequencies_higher)
+    uiplot.btnD.clicked.connect(player.play_sound_with_some_frequencies_cloned_to_higer_position)
 
     uiplot.timer = QtCore.QTimer()
     uiplot.timer.start(1.0)

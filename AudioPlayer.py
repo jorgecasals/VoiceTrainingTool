@@ -19,13 +19,22 @@ class MyPlayer:
 
 
 
-    def play_sound_with_tff_transforming(self):
+    def play_sound_with_some_frequencies_higher(self):
         self.audio = self.recorder.audio
         self.pyaudio_instace = pyaudio.PyAudio()
         self.FORMAT = pyaudio.paInt16
 
         furier_transformer = FurierTransformer(buffer_size=self.CHUNK, rate=self.RATE)
-        new_audio = furier_transformer.levelup_frecuencies(start_frequencies=3000, end_frequencies=4000, power_percentage=50, audio=self.audio)
+        new_audio = furier_transformer.levelup_frecuencies(start_frequencies=100, end_frequencies=200, power_percentage=1000, audio=self.audio)
+        self.play_audio(new_audio)
+
+    def play_sound_with_some_frequencies_cloned_to_higer_position(self):
+        self.audio = self.recorder.audio
+        self.pyaudio_instace = pyaudio.PyAudio()
+        self.FORMAT = pyaudio.paInt16
+
+        furier_transformer = FurierTransformer(buffer_size=self.CHUNK, rate=self.RATE)
+        new_audio = furier_transformer.clone_higher_frecuencies(source_start=100, source_end=200, audio=self.audio)
         self.play_audio(new_audio)
 
     def convert_to_int16_array(self):
