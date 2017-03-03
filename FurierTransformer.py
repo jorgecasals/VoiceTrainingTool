@@ -1,5 +1,7 @@
 import numpy
-
+#this will be splitted into two classes with main responsabilities:
+# 1) transform audio in furier(interface with numpy) and viceversa
+# 2) manipulate the audio transformed data.
 class FurierTransformer:
     def __init__(self, buffer_size, rate):
         self.buffer_size = buffer_size
@@ -79,44 +81,4 @@ class FurierTransformer:
             string_audio = int16_audio.tostring()
             audio_string_array.append(string_audio)
         return audio_string_array
-
-    def chunk(self, audio):
-        data_unflatted = self.convert_to_int16_array(audio)
-        numpy_data = numpy.empty_like(data_unflatted)
-        numpy_data[:] = data_unflatted
-
-        data_flatted = numpy_data.flatten()
-        fft_data = numpy.fft.fft(data_flatted)
-        recovered_data = numpy.fft.ifft(fft_data)
-        real_recovered_data = numpy.real(recovered_data)
-        audio_recovered = []
-        index = 4096
-        while index <= len(real_recovered_data):
-            data_slice = real_recovered_data[index - 4096:index]
-            int_data_slice = []
-            for float_value in data_slice:
-                int_data_slice.append(int(round(float_value)))
-            int_numpy_data_slice = numpy.array(int_data_slice, dtype=numpy.int16)
-            audio_recovered.append(int_numpy_data_slice)
-            index += 4096
-
-        audio_transformed_to_original = self.convert_to_string_array(audio_recovered)
-
-    def convert_to_frequency_level_pair(self, audio):
-        data = audio.flatten()
-        left, right = numpy.split(numpy.abs(numpy.fft.fft(data)), 2)
-        ys = numpy.add(left, right[::-1])
-        ys = numpy.multiply(20, numpy.log10(ys))
-        xs = numpy.arange(self.BUFFERSIZE / 2, dtype=float)
-        # i = int((self.BUFFERSIZE / 2) / 10)
-        # ys = ys[:i]
-        # xs = xs[:i] * self.RATE / self.BUFFERSIZE
-        ys = ys / float(100)
-        return xs, ys
-
-    def convert_to_audio(self, xs, ys):
-        ys = ys*float(100)
-
-
-
 

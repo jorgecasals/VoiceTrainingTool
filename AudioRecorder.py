@@ -4,6 +4,7 @@ import numpy
 import pyaudio
 import threading
 import time
+from Logger import Logger
 
 
 class AudioRecorder:
@@ -18,6 +19,7 @@ class AudioRecorder:
                                              frames_per_buffer=self.BUFFER_SIZE)
         self.recording_is_stopped = True
         self.recording_time = recording_time
+        self.name = "Audio Recorder"
 
     def release_sound_card(self):
         self.py_audio.close(self.sound_card)
@@ -32,6 +34,7 @@ class AudioRecorder:
         #TODO UX: Show message to the user saying that thread should not be started when there another one running.
 
     def record_in_new_thread(self):
+        Logger.info(self, "Audio Recording started")
         end_time = time.time() + self.recording_time
         self.audio = []
         self.recording_is_stopped = False
@@ -40,7 +43,7 @@ class AudioRecorder:
                 break
             self.audio.append(self.get_audio_with_buffer_size())
             self.newAudio = True
-        print("end of record")
+        Logger.info(self, "Audio Recording finalized")
 
     def stop_recording(self):
         self.recording_is_stopped = True

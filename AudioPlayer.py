@@ -1,15 +1,18 @@
 import pyaudio
 import numpy
 from FurierTransformer import *
+from Logger import Logger
 
 #TODO:Too much responsability, I'm going to move the fft to another class. This is just for reproduce purpose.
 class MyPlayer:
+
     def __init__(self, recorder):
         self.recorder = recorder
         self.CHUNK = 1024
         self.CHANNELS = 1
         self.RATE = 44100
         self.RECORD_SECONDS = 5
+        self.name = "Audio Player"
 
     def play_sound(self):
         self.audio = self.recorder.audio
@@ -52,6 +55,7 @@ class MyPlayer:
         return audio_string_array
 
     def play_audio(self, audio_to_play):
+        Logger.info(self, "Audio playing started")
         my_audio_stream = self.pyaudio_instace.open(format=self.FORMAT, channels=self.CHANNELS, rate=self.RATE,
                                                       output=True, frames_per_buffer=self.CHUNK)
         for audio_chunk in audio_to_play:
@@ -60,6 +64,7 @@ class MyPlayer:
         my_audio_stream.stop_stream()
         my_audio_stream.close()
         self.pyaudio_instace.terminate()
+        Logger.info(self, "Audio playing finalized")
 
     #import numpy as np
     #import pylab as pl
