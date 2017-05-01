@@ -5,7 +5,7 @@ from PyQt4 import QtCore, QtGui
 import ui_plot
 from AudioPlayer import *
 from AudioRecorder import *
-
+#TODO: Create local methods to call the player passing the time to playing and recording.
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     recorder = AudioRecorder(recording_time=5)
