@@ -25,5 +25,9 @@ class Sound:
         self.sampling_period_seconds = 1.0
         self.initialize_data()
 
+    def __init__(self, audio_data, number_of_channels, start_time, end_time, number_of_samples, samplin_period, time_of_first_sample):
+        self.audio_data = audio_data
+        self.__init__(number_of_channels, start_time, end_time, number_of_samples, samplin_period, time_of_first_sample)
+
     def initialize_data(self):
         self.data = [[0 for y in xrange(self.number_of_samples)] for x in xrange(self.number_of_channels)]
