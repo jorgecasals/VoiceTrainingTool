@@ -4,7 +4,7 @@ from FurierTransformer import *
 from Logger import Logger
 
 #TODO:Too much responsability, I'm going to move the fft to another class. This is just for reproduce purpose.
-class MyPlayer:
+class AudioPlayer:
 
     def __init__(self, recorder):
         self.recorder = recorder

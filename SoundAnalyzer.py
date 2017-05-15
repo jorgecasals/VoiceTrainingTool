@@ -33,6 +33,10 @@ class SoundAnalyzer:
             ltas.intensity_per_band[1][iband] += correction #TODO: Create type ltas with amplitude property.
 
     def sound_to_spectrum(self, sound, fast):
+
+        if sound is None:
+            return None
+
         numberOfSamples = sound.samples_number
         if(fast):
             numberOfSamples = 2;

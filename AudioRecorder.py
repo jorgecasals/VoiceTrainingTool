@@ -5,7 +5,7 @@ import pyaudio
 import threading
 import time
 from Logger import Logger
-
+import wave
 
 class AudioRecorder:
     def __init__(self, recording_time):
@@ -21,11 +21,13 @@ class AudioRecorder:
         self.recording_time = recording_time
         self.name = "Audio Recorder"
 
+
     def release_sound_card(self):
         self.py_audio.close(self.sound_card)
 
     def get_audio_with_buffer_size(self):
         audio_string = self.sound_card.read(1024*8)
+
         return audio_string
 
     def record(self):
@@ -47,5 +49,23 @@ class AudioRecorder:
 
     def stop_recording(self):
         self.recording_is_stopped = True
+
+    def save_recording(self):
+        try:
+            Logger.info(self, "creating file with audio recorded")
+            path = "D:\Person\VoiceTrainingTool\demo.wav"
+            wf = wave.open(path, 'w')
+            wf.setnchannels(1)
+            sample_size = self.py_audio.get_sample_size(pyaudio.paInt16)
+            wf.setsampwidth(sample_size)
+            wf.setframerate(self.RATE)
+            for buffer in self.audio:
+                wf.writeframes(buffer)
+            wf.close()
+            Logger.info(self, "saved file")
+        except Exception, e:
+            Logger.error(self, str(e))
+
+
 
 

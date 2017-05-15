@@ -9,7 +9,7 @@ from AudioRecorder import *
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     recorder = AudioRecorder(recording_time=5)
-    player = MyPlayer(recorder)
+    player = AudioPlayer(recorder)
     win_plot = ui_plot.QtGui.QMainWindow()
     uiplot = ui_plot.Ui_win_plot()
     uiplot.setupUi(win_plot)
@@ -17,6 +17,7 @@ if __name__ == "__main__":
     uiplot.btnB.clicked.connect(player.play_sound)
     uiplot.btnC.clicked.connect(player.play_sound_with_some_frequencies_higher)
     uiplot.btnD.clicked.connect(player.play_sound_with_some_frequencies_cloned_to_higer_position)
+    uiplot.btnE.clicked.connect(recorder.save_recording)
 
     uiplot.timer = QtCore.QTimer()
     uiplot.timer.start(1.0)
