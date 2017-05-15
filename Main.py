@@ -22,8 +22,6 @@ if __name__ == "__main__":
     uiplot.timer = QtCore.QTimer()
     uiplot.timer.start(1.0)
 
-
-
     ### DISPLAY WINDOWS
     win_plot.show()
     code = app.exec_()
