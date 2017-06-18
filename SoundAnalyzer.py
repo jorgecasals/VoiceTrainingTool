@@ -58,7 +58,7 @@ class SoundAnalyzer:
         spectrum.frequency_step = 1.0 / (sound.samplin_period_seconds * numberOfSamples);
         real_values = spectrum.amplitude[spectrum.reals_row];
         imaginary_values = spectrum.amplitude[spectrum.imaginary_row];
-        scaling = sound.samplin_period_seconds;
+        scaling = sound.sampling_period_seconds;
         real_values[1] = data[1] * scaling;
         imaginary_values[1] = 0.0;
 

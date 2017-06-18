@@ -13,6 +13,7 @@ class AudioPlayer:
         self.RATE = 44100
         self.RECORD_SECONDS = 5
         self.name = "Audio Player"
+        self.audio = []
 
     def play_sound(self):
         self.audio = self.recorder.audio
@@ -20,7 +21,11 @@ class AudioPlayer:
         self.FORMAT = pyaudio.paInt16
         self.play_audio(self.audio)
 
-
+    def play_sound2(self, audio):
+        self.audio = audio
+        self.pyaudio_instace = pyaudio.PyAudio()
+        self.FORMAT = pyaudio.paInt16
+        self.play_audio(self.audio)
 
     def play_sound_with_some_frequencies_higher(self):
         self.audio = self.recorder.audio

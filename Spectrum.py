@@ -1,4 +1,8 @@
 import math
+from Sound import Sound
+from FurierTransformer import FurierTransformer
+import Constants as c
+import numpy
 
 class Spectrum:
     '''
@@ -13,7 +17,7 @@ class Spectrum:
     	dy = y1 = 1.0   // y is row number
     '''
 
-    def __init__(self, highest_frequency, number_of_frequencies):
+    def __init__(self,sound, highest_frequency, number_of_frequencies):
         if highest_frequency <= 0 or number_of_frequencies < 2:
             raise ValueError(
                 "Highest frequency should be greater than 0 "
@@ -30,12 +34,13 @@ class Spectrum:
         self.imaginary_row = 2.0
         self.number_of_rows = 2
         self.row_number = 1.0
-        self.initialize_amplitude()
-
-    def initialize_amplitude(self):
-        #TODO: Possible solution : d = numpy.empty((n, 0)).tolist()
-        self.amplitudes = [[0 for y in xrange(self.number_of_frequencies)] for x in xrange(self.number_of_rows)]
+        furier_transformer = FurierTransformer(c.FRAMES_PER_BUFFER, c.RATE)
+        frequencies_power = furier_transformer.get_frequency_power(sound.audio_data)
+        #TODO: Scale the data... scale = sound.sampling_period_seconds
+        flatten = lambda l: [item for sublist in l for item in sublist]
+        self.amplitudes = flatten(frequencies_power)
 
     def get_value(self, index, level, units):
         energy_density = 2.0* (math.pow(self.amplitudes[1][index], 2) + math.pow(self.amplitudes[2][index], 2))
         return energy_density
+

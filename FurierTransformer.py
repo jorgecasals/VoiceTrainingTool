@@ -18,7 +18,7 @@ class FurierTransformer:
         return data
 
     # TODO: This is the next method I need to look at, after the clean up and also after the put it in a good position.
-    def get_frequency_power(self, data, trim=10, ys_divisor=100):
+    def get_frequency_power2(self, data, trim=10, ys_divisor=100):
         flattened_data = data.flatten()
         left, right = numpy.split(numpy.abs(numpy.fft.fft(flattened_data)), 2)
         power = numpy.add(left, right[::-1])
@@ -48,6 +48,15 @@ class FurierTransformer:
             audio_string = audio_int16.tostring()
             audio_leveled_up.append(audio_string)
         return audio_leveled_up
+
+    def get_frequency_power(self, wave_data):
+        frequency_power = []
+        for audio_frame in wave_data:
+            audio_frame_int = numpy.fromstring(audio_frame, dtype=numpy.int16)
+            values_transformed_by_furier = numpy.fft.fft(audio_frame_int)
+            frequency_power.append(values_transformed_by_furier)
+        return frequency_power
+
 
     def clone_higher_frecuencies(self, source_start, source_end, audio):
         audio_leveled_up = []
