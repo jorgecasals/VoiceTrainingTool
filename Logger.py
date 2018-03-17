@@ -1,5 +1,4 @@
 class Logger:
-
     def __init__(self):
         pass
 
@@ -28,3 +27,8 @@ class Logger:
 
         return wrapper
 
+    DEBUG = False
+    # uncomment this line when pdb'ing
+    # DEBUG = True
+    if DEBUG:
+        log_it = lambda fn: fn

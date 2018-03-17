@@ -2,6 +2,7 @@ from Entities.VoiceSpectrum import VoiceSpectrum
 from FurierTransformer import FurierTransformer
 from Logger import Logger
 
+
 class VoiceSound:
 
 
@@ -12,8 +13,9 @@ class VoiceSound:
 
 
     @Logger.log_it
-    def BuildSpectrum(self):
-        furier_transformer = FurierTransformer(c.FRAMES_PER_BUFFER, c.RATE)
-        frequencies_power = furier_transformer.get_frequency_power(self.values)
-        return VoiceSpectrum(complex_values=frequencies_power, user=self.user, date=self.date)
+    def build_spectrum(self):pass
+        # transformer = FurierTransformer(len(self.values), Constants.RATE)
+        # frequencies_power = transformer.transform(self.values)
+        # spectrum = VoiceSpectrum(complex_values=frequencies_power, user=self.user, date=self.date)
+        # return spectrum
 

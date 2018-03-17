@@ -13,7 +13,7 @@
 	z may be replaced (e.g., in pasting).
 '''
 import math
-from Spectrum import *
+from SpectrumOld import *
 from Ltas import *
 
 class SoundAnalyzer:

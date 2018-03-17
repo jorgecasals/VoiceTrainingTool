@@ -4,7 +4,7 @@ from FurierTransformer import FurierTransformer
 import Constants as c
 import numpy
 
-class Spectrum:
+class SpectrumOld:
     '''
     	xmin            // lowest frequency (Hz)
     	xmax            // highest frequency (Hz)

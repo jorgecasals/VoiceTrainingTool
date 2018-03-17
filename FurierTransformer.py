@@ -2,6 +2,9 @@ import numpy
 #this will be splitted into two classes with main responsabilities:
 # 1) transform audio in furier(interface with numpy) and viceversa
 # 2) manipulate the audio transformed data.
+from Logger import Logger
+
+
 class FurierTransformer:
     def __init__(self, buffer_size, rate):
         self.buffer_size = buffer_size
@@ -19,10 +22,12 @@ class FurierTransformer:
 
     # TODO: This is the next method I need to look at, after the clean up and also after the put it in a good position.
     def get_frequency_power2(self, data, trim=10, ys_divisor=100):
-        flattened_data = data.flatten()
-        left, right = numpy.split(numpy.abs(numpy.fft.fft(flattened_data)), 2)
+        # flattened_data = data.flatten()
+        audio_frame_int = numpy.fromstring(data, dtype=numpy.int16)
+        left, right = numpy.split(numpy.abs(numpy.fft.fft(audio_frame_int)), 2)
         power = numpy.add(left, right[::-1])
-        power = numpy.multiply(20, numpy.log10(power))
+        power = power * len(data)
+        # power = numpy.multiply(20, numpy.log10(power))
         frequencies = numpy.arange(self.buffer_size / 2, dtype=float)
         #if trim:
             #i = int((self.buffer_size / 2) / trim)
@@ -51,11 +56,18 @@ class FurierTransformer:
 
     def get_frequency_power(self, wave_data):
         frequency_power = []
-        for audio_frame in wave_data:
-            audio_frame_int = numpy.fromstring(audio_frame, dtype=numpy.int16)
-            values_transformed_by_furier = numpy.fft.fft(audio_frame_int)
-            frequency_power.append(values_transformed_by_furier)
-        return frequency_power
+        # for audio_frame in wave_data:
+        audio_frame_int = numpy.fromstring(wave_data, dtype=numpy.int16)
+        values_transformed_by_furier = numpy.fft.fft(audio_frame_int)
+        # frequency_power.append(values_transformed_by_furier)
+        return values_transformed_by_furier
+
+
+    @Logger.log_it
+    def transform(self, values):
+        # data = self.get_frequency_power(values)
+        frequency, power = self.get_frequency_power2(values)
+        return frequency, power
 
 
     def clone_higher_frecuencies(self, source_start, source_end, audio):
