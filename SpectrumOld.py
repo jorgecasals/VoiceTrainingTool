@@ -1,7 +1,6 @@
 import math
 from Sound import Sound
 from FurierTransformer import FurierTransformer
-import Constants as c
 import numpy
 
 class SpectrumOld:

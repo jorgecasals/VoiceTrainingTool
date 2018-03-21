@@ -10,6 +10,7 @@ import threading
 import time
 from Logger import Logger
 import wave
+from Common.Constants import BABABA_AUDIO_FILE_PATH
 
 class AudioRecorder:
     def __init__(self, recording_time = 5):
@@ -24,7 +25,7 @@ class AudioRecorder:
         self.recording_is_stopped = True
         self.recording_time = recording_time
         self.name = "Audio Recorder"
-        self.path = "D:\Person\VoiceTrainingTool\Tests\Resources\demo.wav"
+        self.path = BABABA_AUDIO_FILE_PATH
 
 
     def release_sound_card(self):

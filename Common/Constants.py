@@ -6,12 +6,16 @@ frequencies_total_values = 0 #
 
 #Old constants:
 SOUND_TOTAL_TIME = 5
-FRAMES_PER_BUFFER = 1024
+FRAMES_PER_BUFFER = 1024.0
 CHANNELS = 1
-RATE = 44100
+RATE = 44100.0
 RECORD_SECONDS = 5
-FILE_FOR_TESTING_PURPOSES_PATH = "D:\Person\VoiceTrainingTool\Tests\Resources\demo.wav"
 READING_SIZE = 8*1024
-FREQUENCIES_TOTAL = 22050
+FREQUENCIES_TOTAL = 22050.0
+SCALE_TO_BE_SAME_AS_PRAAT = 4.11351237396663e-09
+BANDWIDTH = 1000.0
+
+BABABA_AUDIO_FILE_PATH = r'D:\Person\VoiceTrainingTool\Tests\Resources\FilesForTesting\bababa.wav'
+
 
 
