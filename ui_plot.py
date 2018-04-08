@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui_plot.ui'
+# Form implementation generated from reading ui file 'login.ui'
 #
 # Created: Tue Jan 24 22:11:54 2017
 #      by: PyQt4 UI code generator 4.11.3
@@ -37,24 +37,27 @@ class Ui_win_plot(object):
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setContentsMargins(6, 0, 6, 0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.btnA = QtGui.QPushButton(self.centralwidget)
-        self.btnA.setObjectName(_fromUtf8("btnA"))
-        self.horizontalLayout.addWidget(self.btnA)
-        self.btnB = QtGui.QPushButton(self.centralwidget)
-        self.btnB.setObjectName(_fromUtf8("btnB"))
-        self.horizontalLayout.addWidget(self.btnB)
-        self.btnC = QtGui.QPushButton(self.centralwidget)
-        self.btnC.setObjectName(_fromUtf8("btnC"))
-        self.horizontalLayout.addWidget(self.btnC)
-        self.btnD = QtGui.QPushButton(self.centralwidget)
-        self.btnD.setObjectName(_fromUtf8("btnD"))
-        self.horizontalLayout.addWidget(self.btnD)
-        self.btnE = QtGui.QPushButton(self.centralwidget)
-        self.btnE.setObjectName(_fromUtf8("btnE"))
-        self.horizontalLayout.addWidget(self.btnE)
-        self.btnF = QtGui.QPushButton(self.centralwidget)
-        self.btnF.setObjectName(_fromUtf8("btnF"))
-        self.horizontalLayout.addWidget(self.btnF)
+        self.btn_cancel = QtGui.QPushButton(self.centralwidget)
+        self.btn_cancel.setObjectName(_fromUtf8("cancel"))
+        self.horizontalLayout.addWidget(self.btn_cancel)
+        self.btn_ok = QtGui.QPushButton(self.centralwidget)
+        self.btn_ok.setObjectName(_fromUtf8("ok"))
+        self.horizontalLayout.addWidget(self.btn_ok)
+        # self.btnB = QtGui.QPushButton(self.centralwidget)
+        # self.btnB.setObjectName(_fromUtf8("btnB"))
+        # self.horizontalLayout.addWidget(self.btnB)
+        # self.btnC = QtGui.QPushButton(self.centralwidget)
+        # self.btnC.setObjectName(_fromUtf8("btnC"))
+        # self.horizontalLayout.addWidget(self.btnC)
+        # self.btnD = QtGui.QPushButton(self.centralwidget)
+        # self.btnD.setObjectName(_fromUtf8("btnD"))
+        # self.horizontalLayout.addWidget(self.btnD)
+        # self.btnE = QtGui.QPushButton(self.centralwidget)
+        # self.btnE.setObjectName(_fromUtf8("btnE"))
+        # self.horizontalLayout.addWidget(self.btnE)
+        # self.btnF = QtGui.QPushButton(self.centralwidget)
+        # self.btnF.setObjectName(_fromUtf8("btnF"))
+        # self.horizontalLayout.addWidget(self.btnF)
 
         self.verticalLayout.addLayout(self.horizontalLayout)
         win_plot.setCentralWidget(self.centralwidget)
@@ -63,13 +66,14 @@ class Ui_win_plot(object):
         QtCore.QMetaObject.connectSlotsByName(win_plot)
 
     def retranslateUi(self, win_plot):
-        win_plot.setWindowTitle(_translate("win_plot", "MainWindow", None))
-        self.btnA.setText(_translate("win_plot", "Record", None))
-        self.btnB.setText(_translate("win_plot", "Play", None))
-        self.btnC.setText(_translate("win_plot", "Play Level up", None))
-        self.btnD.setText(_translate("win_plot", "Move frequencies", None))
-        self.btnE.setText(_translate("win_plot", "Save to file", None))
-        self.btnF.setText(_translate("win_plot", "Read from file", None))
+        win_plot.setWindowTitle(_translate("win_plot", "Voice Trainer", None))
+        self.btn_cancel.setText(_translate("win_plot", "Cancel", None))
+        self.btn_ok.setText(_translate("win_plot", "Ok", None))
+        # self.btnB.setText(_translate("win_plot", "Play", None))
+        # self.btnC.setText(_translate("win_plot", "Play Level up", None))
+        # self.btnD.setText(_translate("win_plot", "Move frequencies", None))
+        # self.btnE.setText(_translate("win_plot", "Save to file", None))
+        # self.btnF.setText(_translate("win_plot", "Read from file", None))
 
 
 from PyQt4 import Qwt5
