@@ -1,7 +1,7 @@
 import numpy
 
 class Spectrum:
-    def __init__(self, frequencies, values, frequency_step):
+    def __init__(self, frequencies= None, values= None, frequency_step= None):
         self.frequencies = frequencies
         self.values = values
         self.frequency_step = frequency_step

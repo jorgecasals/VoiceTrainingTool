@@ -13,7 +13,7 @@ import wave
 from Common.Constants import BABABA_AUDIO_FILE_PATH
 
 class AudioRecorder:
-    def __init__(self, recording_time = 5):
+    def __init__(self, recording_time = 30):
         self.newAudio = False
         self.RATE = 44100
         self.BUFFER_SIZE = 1024 #= 2 ** 12
@@ -36,13 +36,13 @@ class AudioRecorder:
 
         return audio_string
 
-    def record(self):
-        self.recording_thread = threading.Thread(target=self.record_in_new_thread)
+    def record_in_new_thread(self):
+        self.recording_thread = threading.Thread(target=self.record)
         self.recording_thread.start()
         #TODO UX: Show message to the user saying that thread should not be started when there another one running.
 
     @Logger.log_it
-    def record_in_new_thread(self):
+    def record(self):
         Logger.info(self, "Audio Recording started")
         end_time = time.time() + self.recording_time
         self.audio = []
@@ -71,6 +71,16 @@ class AudioRecorder:
             audio_file.close()
 
             Logger.info(self, "saved file")
+        except Exception, e:
+            Logger.error(self, str(e))
+
+    def get_recording_in_memory(self):
+        try:
+            Logger.info(self, "getting audio recorded")
+
+            return self.audio
+
+            Logger.info(self, "got audio")
         except Exception, e:
             Logger.error(self, str(e))
 

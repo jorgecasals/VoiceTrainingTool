@@ -1,0 +1,8 @@
+DATA = 'DATA'
+USERS = 'USERS'
+TRAININGS = 'TRAININGS'
+LTAS_TXT = 'ltas.txt'
+SPECTRUM_TXT = 'spectrum.txt'
+SOUND_WAV = 'sound.wav'
+TRAINING_INFO_TXT = 'info.txt'
+READINGS = 'READINGS'

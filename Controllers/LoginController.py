@@ -1,6 +1,7 @@
 import sys
 import ViewsNavigator
 import Services.ServiceProvider
+import Session
 
 from PyQt4 import QtCore, QtGui,uic
 
@@ -24,7 +25,8 @@ class LoginController (QtGui.QMainWindow):
         self.login_cmb_users.addItems(users)
 
     def click_ok(self):
-        self.close()
+        Session.user_name = str(self.login_cmb_users.currentText())
+        ViewsNavigator.navigator.navigate_to_view(self, ViewsNavigator.navigator.trainings)
 
     def click_cancel(self):
         self.close()
