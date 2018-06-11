@@ -1,5 +1,5 @@
 class Ltas:
-    def __init__(self, bands, values, bandwidth):
+    def __init__(self, bands = None, values = None, bandwidth = None):
         self.bands = bands
         self.values = values
         self.bandwidth = bandwidth

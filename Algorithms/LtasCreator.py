@@ -9,7 +9,7 @@ class LtasCreator:
 
     def create_ltas_from_spectrum(self, spectrum):
         bands_number = int(ceil(max_frequency / BANDWIDTH))
-        ltas_values = [None] * bands_number
+        ltas_values = [0] * bands_number
         for banda in range(0, bands_number - 1):
             initial_band_frequency = banda * BANDWIDTH
             mean_energy_density = spectrum.get_mean_energy_density(initial_band_frequency, initial_band_frequency + BANDWIDTH)

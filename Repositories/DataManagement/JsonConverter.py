@@ -1,5 +1,6 @@
 import json
 from numpy import ndarray
+import datetime
 
 class JsonConverter:
     def __init__(self, type_builder):
@@ -17,7 +18,5 @@ class JsonConverter:
         return json_data
 
     def better_str(self, data):
-        if isinstance(data, list) or isinstance(data, ndarray) :
-            return '[%s]' % ', '.join(map(str, data))
-        else:
-            return str(data)
+        if isinstance(data, datetime.datetime):
+            return data.__str__()

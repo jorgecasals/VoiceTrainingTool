@@ -9,6 +9,7 @@ import Session
 from UI.Models.TableColumnModel import TableColumnModel
 from UI.Models.TableModel import TableModel, QHeaderView, QAbstractItemView
 from PyQt4.QtGui import *
+from Algorithms.SoundAlgorithms import SoundAlgorithms
 
 from PyQt4 import QtCore, QtGui,uic
 from AudioPlayer import AudioPlayer
@@ -20,6 +21,7 @@ class TrainingController (QtGui.QMainWindow):
         self.ltas_service = Services.ServiceProvider.ltas_service
         self.spectrum_service = Services.ServiceProvider.spectrum_service
         self.player = AudioPlayer()
+        self.sound_algoritms = SoundAlgorithms()
 
         uic.loadUi('..\UI\\training.ui', self)
         self.register_buttons_actions()
@@ -38,7 +40,8 @@ class TrainingController (QtGui.QMainWindow):
 
     def load_previous_trainings(self):
         previous_trainings = self.training_service.get_previous_training_of_user(Session.user_name)
-        projection_level_for_trainings_dict = self.get_projection_level_for_trainings_dict(previous_trainings)
+        if previous_trainings != None and len(previous_trainings) > 0:
+            projection_level_for_trainings_dict = self.get_projection_level_for_trainings_dict(previous_trainings)
 
         header = [
              TableColumnModel(name='Number', get_data_func=lambda x: x.number)
@@ -55,7 +58,8 @@ class TrainingController (QtGui.QMainWindow):
         trainings_ltas_dict = {}
         ltas_list = []
         for training in previous_trainings:
-            ltas = self.ltas_service.get_ltas(Session.user_name, training.number)
+            sound = self.training_service.get_sound_of_training(Session.user_name, training.number)
+            ltas = self.sound_algoritms.calculate_ltas_from_sound(sound)
             trainings_ltas_dict[training] = ltas
             ltas_list.append(ltas)
         min_ltas_value = min(map(lambda t: t.get_min_value(), ltas_list))
