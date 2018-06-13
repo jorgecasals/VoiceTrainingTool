@@ -16,7 +16,6 @@ class SpectrumCreator:
         xs = numpy.arange(len(data) / 2, dtype=float)
         i = int((len(data) / 2))
         fft_data = fft_data[:i]
-        # TODO: it should be in the constructor of the object spectrum
         frequency_step = float(RATE) / len(data)
         xs = xs[:i] * frequency_step
         spectrum = Spectrum(frequencies=xs, values=fft_data, frequency_step=frequency_step)
