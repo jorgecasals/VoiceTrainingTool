@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1083</width>
-    <height>611</height>
+    <width>1320</width>
+    <height>910</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -59,8 +59,8 @@
      <rect>
       <x>10</x>
       <y>70</y>
-      <width>1041</width>
-      <height>141</height>
+      <width>1301</width>
+      <height>421</height>
      </rect>
     </property>
     <property name="title">
@@ -69,7 +69,7 @@
     <widget class="QPushButton" name="training_btn_start">
      <property name="geometry">
       <rect>
-       <x>530</x>
+       <x>520</x>
        <y>50</y>
        <width>93</width>
        <height>28</height>
@@ -108,14 +108,38 @@
       <enum>QComboBox::InsertAlphabetically</enum>
      </property>
     </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>80</y>
+       <width>501</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="historics_plot_layout"/>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>50</y>
+       <width>131</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Historical projections</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="training_gb_previous_training">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>220</y>
-      <width>1041</width>
-      <height>371</height>
+      <y>500</y>
+      <width>1301</width>
+      <height>401</height>
      </rect>
     </property>
     <property name="title">
@@ -125,12 +149,15 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>20</y>
-       <width>521</width>
+       <y>50</y>
+       <width>771</width>
        <height>341</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="trainings_layout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
       <item>
        <widget class="QTableView" name="training_tbl_previous_trainings"/>
       </item>
@@ -139,19 +166,45 @@
     <widget class="QWidget" name="verticalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>550</x>
-       <y>20</y>
-       <width>481</width>
+       <x>790</x>
+       <y>50</y>
+       <width>501</width>
        <height>341</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="plot_layout"/>
     </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>790</x>
+       <y>20</y>
+       <width>131</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Spectrum and LTAS</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>131</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>All your trainings</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QPushButton" name="training_btn_logout">
     <property name="geometry">
      <rect>
-      <x>960</x>
+      <x>1210</x>
       <y>30</y>
       <width>93</width>
       <height>28</height>

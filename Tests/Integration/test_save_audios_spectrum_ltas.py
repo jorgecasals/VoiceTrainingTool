@@ -1,4 +1,3 @@
-from SoundAnalyzer import SoundAnalyzer
 from AudioRecorder import AudioRecorder
 from Entities.Audio import Audio
 import numpy
@@ -6,6 +5,15 @@ from BababaConstants import BABABA_SPECTRUM_VALUES_PATH
 from BababaConstants import BABABA_LTAS_VALUES_PATH
 from Algorithms.SpectrumCreator import SpectrumCreator
 from Algorithms.LtasCreator import LtasCreator
+import numpy
+from AudioRecorder import AudioRecorder
+
+from Algorithms.LtasCreator import LtasCreator
+from Algorithms.SpectrumCreator import SpectrumCreator
+from BababaConstants import BABABA_LTAS_VALUES_PATH
+from BababaConstants import BABABA_SPECTRUM_VALUES_PATH
+from Entities.Audio import Audio
+
 
 def test_save_ltas_spectrum_values_from_bababa_file():
     audio_frames = get_audio_frames()

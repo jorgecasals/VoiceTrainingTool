@@ -3,7 +3,7 @@ from PyQt4.QtGui import QPushButton
 import ViewsNavigator
 import Services.ServiceProvider
 import Session
-from AudioRecorder import AudioRecorder
+from Playground.AudioRecorder import AudioRecorder
 import datetime
 from Entities.Training import Training
 
@@ -22,6 +22,7 @@ class TrainerController (QtGui.QMainWindow):
         self.recording = False
         self.sound_recorded = ""
         self.set_no_ready_to_save_state()
+        self.hide_recording_information()
         self.show()
 
     def register_buttons_actions(self):
@@ -74,12 +75,33 @@ class TrainerController (QtGui.QMainWindow):
         self.trainer_btn_record.setText("Record")
         self.recording = False
 
+    def hide_recording_information(self):
+        self.training_lbl_recording.hide()
+        self.training_lbl_recording_seconds.hide()
+        self.recording_time_seconds = 0
+        self.training_lbl_recording_seconds.setText(str(self.recording_time_seconds) + ' Seconds')
+
+    def show_recording_information(self):
+        self.training_lbl_recording.show()
+        self.training_lbl_recording_seconds.show()
+        self.looptimer = QtCore.QTimer()
+        self.looptimer.timeout.connect(self.update_seconds)
+        self.looptimer.start(1000)
+        self.recording_time_seconds = 0
+
+    def update_seconds(self):
+        self.recording_time_seconds  = self.recording_time_seconds + 1
+        self.training_lbl_recording_seconds.setText(str(self.recording_time_seconds) + ' Seconds')
+
     def start_recording(self):
         self.audio_recorder.record_in_new_thread()
         self.recording_starting_time = datetime.datetime.now()
+        self.show_recording_information()
 
     def stop_recording(self):
         #get the data from the recorder
         self.audio_recorder.stop_recording()
         self.sound_recorded = self.audio_recorder.get_recording_in_memory()
         self.time_dedicated = str(datetime.datetime.now() - self.recording_starting_time)
+        self.hide_recording_information()
+        self.looptimer.stop()

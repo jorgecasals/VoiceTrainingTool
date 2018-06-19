@@ -8,7 +8,7 @@ class PlotController(pg.PlotWidget):
 
     read_collected = QtCore.pyqtSignal(np.ndarray)
 
-    def __init__(self, frequency_units='Hz'):
+    def __init__(self, x_label = 'Frequency', y_label = 'Pascal', coord_units = 'Pa', abs_units='Hz'):
         super(PlotController, self).__init__()
         self.read_collected.connect(self.update)
         self.img = pg.ImageItem()
@@ -23,12 +23,10 @@ class PlotController(pg.PlotWidget):
         # set colormap
         self.img.setLookupTable(lut)
         self.img.setLevels([-50,40])
+        self.setLabel('bottom', x_label, units=abs_units)
+        self.setLabel('left', y_label, units=coord_units)
 
-        self.setLabel('bottom', 'Frequency', units=frequency_units)
-        self.setLabel('left', 'Pascal', units='Pa')
-        self.setWindowTitle('Training\'s spectrum')
-
-    def update(self, data):
+    def update(self, abs, data):
         # normalized, windowed frequencies in data chunk
         #spec = np.fft.rfft(chunk*self.win) / CHUNKSZ
         # get magnitude
@@ -36,17 +34,40 @@ class PlotController(pg.PlotWidget):
         # convert to dB scale
         #psd = 20 * np.log10(psd)
 
-        x_lenght = len(data)
-        self.img_array = np.zeros(x_lenght)
+        #x_lenght = len(data)
+        #self.img_array = np.zeros(x_lenght)
         # setup the correct scaling for y-axis
-        freq = np.arange((x_lenght/2)+1)/(float(x_lenght)/FS)
-        yscale = 1.0/(self.img_array.shape[0]/freq[-1])
-        self.img.scale((1./FS)*x_lenght, yscale)
-        self.win = np.hanning(x_lenght)
+        #freq = np.arange((x_lenght/2)+1)/(float(x_lenght)/FS)
+        #yscale = 1.0/(self.img_array.shape[0]/freq[-1])
+        #self.img.scale((1./FS)*x_lenght, yscale)
+        #self.win = np.hanning(x_lenght)
 
         #psd = 20 * np.log10(psd)
         # roll down one and replace leading edge with new data
-        self.img_array = np.roll(self.img_array, -1, 0)
+        #self.img_array = np.roll(self.img_array, -1, 0)
         #self.img_array[-1:] = psd
+        #half_psd = data[0:len(freq)]
+        self.plot(abs, data)
+
+    def update_spectrum(self, data):
+        # normalized, windowed frequencies in data chunk
+        # spec = np.fft.rfft(chunk*self.win) / CHUNKSZ
+        # get magnitude
+        # psd = abs(spec)
+        # convert to dB scale
+        # psd = 20 * np.log10(psd)
+
+        x_lenght = len(data)
+        self.img_array = np.zeros(x_lenght)
+        # setup the correct scaling for y-axis
+        freq = np.arange((x_lenght / 2) + 1) / (float(x_lenght) / FS)
+        yscale = 1.0 / (self.img_array.shape[0] / freq[-1])
+        self.img.scale((1. / FS) * x_lenght, yscale)
+        self.win = np.hanning(x_lenght)
+
+        # psd = 20 * np.log10(psd)
+        # roll down one and replace leading edge with new data
+        self.img_array = np.roll(self.img_array, -1, 0)
+        # self.img_array[-1:] = psd
         half_psd = data[0:len(freq)]
         self.plot(freq, half_psd)

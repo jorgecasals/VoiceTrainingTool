@@ -1,7 +1,10 @@
 import os
-from Logger import Logger
 import wave
+
 import pyaudio
+
+from Playground.Logger import Logger
+
 
 class FileManager:
 
