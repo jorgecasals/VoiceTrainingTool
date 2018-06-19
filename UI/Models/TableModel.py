@@ -30,3 +30,7 @@ class TableModel(QAbstractTableModel):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
             return self.column_models[col].name
         return None
+
+    def set_data(self, data_list, headers):
+        self.data_list = data_list
+        self.column_models = headers
