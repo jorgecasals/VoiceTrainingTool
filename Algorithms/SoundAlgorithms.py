@@ -11,16 +11,20 @@ class SoundAlgorithms:
         pass
 
     def calculate_ltas_from_sound(self, sound):
-        sound_buffer = self.convert_sound_list_to_buffer(sound)
-        spectrum = self.calculate_spectrum_from_sound(sound_buffer)
-        ltas = LtasCreator().create_ltas_from_spectrum(spectrum)
+        spectrum = self.calculate_spectrum_from_sound(sound)
+        ltas = self.calculate_ltas_from_spectrum(spectrum)
         return ltas
 
     def calculate_spectrum_from_sound(self, sound):
-        byte_frames_audio = numpy.fromstring(sound, dtype=numpy.int16)
+        sound_buffer = self.convert_sound_list_to_buffer(sound)
+        byte_frames_audio = numpy.fromstring(sound_buffer, dtype=numpy.int16)
         audio = Audio(byte_frames_audio)
         spectrum = SpectrumCreator().create_spectrum_from_audio(audio)
         return spectrum
+
+    def calculate_ltas_from_spectrum(self, spectrum):
+        ltas = LtasCreator().create_ltas_from_spectrum(spectrum)
+        return ltas
 
     def convert_sound_list_to_buffer(self, sound):
         buffer_sound = ''
