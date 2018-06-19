@@ -1,3 +1,5 @@
+from sys import maxint
+
 from Entities.Ltas import Ltas
 
 class ProjectionCalculator:
@@ -18,3 +20,5 @@ class ProjectionCalculator:
         projection_value = ltas_value_in_projection_bands * ltas.bandwidth
 
         return projection_value
+
+
