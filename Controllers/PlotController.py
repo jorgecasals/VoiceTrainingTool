@@ -6,11 +6,8 @@ from UI.Models.PlotModel import PlotModel
 
 class PlotController(pg.PlotWidget):
 
-    read_collected = QtCore.pyqtSignal(np.ndarray)
-
     def __init__(self, x_label = 'Frequency', y_label = 'Pascal', coord_units = 'Pa', abs_units='Hz'):
         super(PlotController, self).__init__()
-        self.read_collected.connect(self.update)
         self.img = pg.ImageItem()
         self.addItem(self.img)
 
@@ -19,7 +16,8 @@ class PlotController(pg.PlotWidget):
         color = np.array([[0,255,255,255], [255,255,0,255], [0,0,0,255], (0, 0, 255, 255), (255, 0, 0, 255)], dtype=np.ubyte)
         cmap = pg.ColorMap(pos, color)
         lut = cmap.getLookupTable(0.0, 1.0, 256)
-
+        pg.setConfigOption('background', 'w')
+        pg.setConfigOption('foreground', 'b')
         # set colormap
         self.img.setLookupTable(lut)
         self.img.setLevels([-50,40])
