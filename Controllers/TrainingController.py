@@ -131,7 +131,7 @@ class TrainingController (QtGui.QMainWindow):
             , TableColumnModel(name='Recording time', get_data_func=lambda x: x.time_dedicated)
             , TableColumnModel(name='projection_level', get_data_func=lambda x: projection_level_for_trainings_dict[x])]
         trainings = projection_level_for_trainings_dict.keys()
-
+        trainings.sort(key=lambda t: t.number)
         return (header, trainings)
 
     def selection_changed_event(self, new, old):

@@ -1,6 +1,8 @@
 import numpy as np
 import pyqtgraph as pg
 from PyQt4 import QtCore, QtGui
+from PyQt4.QtGui import QPen, QColor
+
 from Common.Constants import *
 from UI.Models.PlotModel import PlotModel
 
@@ -45,7 +47,8 @@ class PlotController(pg.PlotWidget):
         #self.img_array = np.roll(self.img_array, -1, 0)
         #self.img_array[-1:] = psd
         #half_psd = data[0:len(freq)]
-        self.plot(abs, data)
+
+        self.plot(abs, data, pen=QPen(QColor(0, 0, 0)))
 
     def update_spectrum(self, data):
         # normalized, windowed frequencies in data chunk
@@ -68,4 +71,4 @@ class PlotController(pg.PlotWidget):
         self.img_array = np.roll(self.img_array, -1, 0)
         # self.img_array[-1:] = psd
         half_psd = data[0:len(freq)]
-        self.plot(freq, half_psd)
+        self.plot(freq, half_psd, pen=QPen(QColor(0, 0, 0)))
