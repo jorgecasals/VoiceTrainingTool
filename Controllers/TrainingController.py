@@ -127,7 +127,7 @@ class TrainingController (QtGui.QMainWindow):
             ltas = trainings_ltas_dict[training]
             projection_level = ProjectionCalculator().measure_projection(ltas=ltas)
             training_projection_level_dict[training] = projection_level
-        ProjectionCalculator().normalize_projections(training_projection_level_dict, 5, 10)
+        #ProjectionCalculator().normalize_projections(training_projection_level_dict, 5, 10)
         return training_projection_level_dict
 
     def get_projection_level(self, sound):
