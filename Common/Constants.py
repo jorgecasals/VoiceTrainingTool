@@ -16,6 +16,7 @@ SCALE_TO_BE_SAME_AS_PRAAT = 4.11351237396663e-09
 BANDWIDTH = 100.0
 
 BABABA_AUDIO_FILE_PATH = r'D:\Person\VoiceTrainingTool\Tests\Resources\FilesForTesting\bababa.wav'
+FS = 44100 #Hz
 
 
 
