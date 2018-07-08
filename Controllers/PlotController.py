@@ -8,7 +8,7 @@ from UI.Models.PlotModel import PlotModel
 
 class PlotController(pg.PlotWidget):
 
-    def __init__(self, x_label = 'Frequency', y_label = 'Pascal', coord_units = 'Pa', abs_units='Hz'):
+    def __init__(self, title='', x_label = 'Frequency', y_label = 'Pascal', y_units ='Pa', x_units='Hz'):
         super(PlotController, self).__init__()
         self.img = pg.ImageItem()
         self.addItem(self.img)
@@ -21,10 +21,12 @@ class PlotController(pg.PlotWidget):
         pg.setConfigOption('background', 'w')
         pg.setConfigOption('foreground', 'b')
         # set colormap
-        self.img.setLookupTable(lut)
-        self.img.setLevels([-50,40])
-        self.setLabel('bottom', x_label, units=abs_units)
-        self.setLabel('left', y_label, units=coord_units)
+        #self.img.setLookupTable(lut)
+        #self.img.setLevels([-50,40])
+        self.setLabel('bottom', x_label, units=x_units)
+        self.setLabel('left', y_label, units=y_units)
+        my_plot = self.getPlotItem()
+        my_plot.setTitle(title)
 
     def update(self, abs, data):
         # normalized, windowed frequencies in data chunk
@@ -47,7 +49,6 @@ class PlotController(pg.PlotWidget):
         #self.img_array = np.roll(self.img_array, -1, 0)
         #self.img_array[-1:] = psd
         #half_psd = data[0:len(freq)]
-
         self.plot(abs, data, pen=QPen(QColor(0, 0, 0)))
 
     def update_spectrum(self, data):
@@ -72,3 +73,5 @@ class PlotController(pg.PlotWidget):
         # self.img_array[-1:] = psd
         half_psd = data[0:len(freq)]
         self.plot(freq, half_psd, pen=QPen(QColor(0, 0, 0)))
+
+

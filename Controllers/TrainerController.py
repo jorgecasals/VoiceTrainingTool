@@ -1,4 +1,4 @@
-from PyQt4.QtGui import QPushButton
+from PyQt4.QtGui import QPushButton, QTextBrowser
 
 import ViewsNavigator
 import Services.ServiceProvider
@@ -49,7 +49,7 @@ class TrainerController (QtGui.QMainWindow):
     def load_selected_reading(self):
         reading_title = Session.selected_reading
         select_reading = self.training_service.get_reading(reading_title)
-        self.trainer_tb_text.setText(select_reading.text)
+        self.trainer_tb_text.setPlainText(select_reading.text.decode("utf-8"))
 
     def click_record_or_finish(self):
         if self.recording:

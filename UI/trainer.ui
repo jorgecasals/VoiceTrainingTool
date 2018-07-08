@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>1043</height>
+    <width>790</width>
+    <height>599</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,9 +18,9 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>210</y>
+      <y>140</y>
       <width>751</width>
-      <height>811</height>
+      <height>441</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -29,12 +29,27 @@
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+    <property name="font">
+     <font>
+      <family>Georgia</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::NoContextMenu</enum>
+    </property>
+    <property name="locale">
+     <locale language="Spanish" country="Spain"/>
+    </property>
+    <property name="documentTitle">
+     <string>Reading</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="trainer_btn_record">
     <property name="geometry">
      <rect>
       <x>680</x>
-      <y>100</y>
+      <y>50</y>
       <width>93</width>
       <height>28</height>
      </rect>
@@ -47,7 +62,7 @@
     <property name="geometry">
      <rect>
       <x>570</x>
-      <y>100</y>
+      <y>50</y>
       <width>93</width>
       <height>28</height>
      </rect>
@@ -81,7 +96,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>60</y>
+      <y>50</y>
       <width>481</width>
       <height>22</height>
      </rect>
@@ -93,14 +108,14 @@
      </font>
     </property>
     <property name="text">
-     <string>You can start a new training, reset the training, or cancel it.</string>
+     <string>After recording a training, you can reset it or cancel it</string>
     </property>
    </widget>
    <widget class="QLabel" name="training_lbl_save_text">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>160</y>
+      <y>90</y>
       <width>511</width>
       <height>22</height>
      </rect>
@@ -118,8 +133,8 @@
    <widget class="QPushButton" name="trainer_btn_save">
     <property name="geometry">
      <rect>
-      <x>680</x>
-      <y>160</y>
+      <x>570</x>
+      <y>90</y>
       <width>93</width>
       <height>28</height>
      </rect>
@@ -132,7 +147,7 @@
     <property name="geometry">
      <rect>
       <x>570</x>
-      <y>60</y>
+      <y>20</y>
       <width>101</width>
       <height>22</height>
      </rect>
@@ -151,7 +166,7 @@
     <property name="geometry">
      <rect>
       <x>670</x>
-      <y>60</y>
+      <y>20</y>
       <width>101</width>
       <height>22</height>
      </rect>

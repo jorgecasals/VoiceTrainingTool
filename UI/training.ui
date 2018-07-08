@@ -59,7 +59,7 @@
      <rect>
       <x>10</x>
       <y>70</y>
-      <width>1301</width>
+      <width>641</width>
       <height>221</height>
      </rect>
     </property>
@@ -106,30 +106,6 @@
      </property>
      <property name="insertPolicy">
       <enum>QComboBox::InsertAlphabetically</enum>
-     </property>
-    </widget>
-    <widget class="QWidget" name="horizontalLayoutWidget_2">
-     <property name="geometry">
-      <rect>
-       <x>790</x>
-       <y>80</y>
-       <width>501</width>
-       <height>131</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="historics_plot_layout"/>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>790</x>
-       <y>50</y>
-       <width>131</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Historical projections</string>
      </property>
     </widget>
    </widget>
@@ -213,6 +189,30 @@
     <property name="text">
      <string>Logout</string>
     </property>
+   </widget>
+   <widget class="QGroupBox" name="historical_gb">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>70</y>
+      <width>641</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Historical projections</string>
+    </property>
+    <widget class="QWidget" name="horizontalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>621</width>
+       <height>181</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="historics_plot_layout"/>
+    </widget>
    </widget>
   </widget>
  </widget>

@@ -53,10 +53,10 @@ class TrainingController (QtGui.QMainWindow):
         self.spectrum_plot = PlotController()
         self.plot_layout.addWidget(self.spectrum_plot)
         self.spectrum_plot.show()
-        self.ltas_plot = PlotController(abs_units='kHz', y_label='Amplitude', coord_units='dB')
+        self.ltas_plot = PlotController(x_units='Hz', y_label='Amplitude', y_units='dB')
         self.plot_layout.addWidget(self.ltas_plot)
         self.ltas_plot.show()
-        self.historics_plot = PlotController(x_label='Training Number', y_label = 'Projection Level', abs_units='Int', coord_units='PL')
+        self.historics_plot = PlotController(x_label='Training Number', y_label = 'Projection Level', x_units='', y_units='')
         self.historics_plot_layout.addWidget(self.historics_plot)
         self.historics_plot.show()
 
@@ -73,7 +73,7 @@ class TrainingController (QtGui.QMainWindow):
         self.historics_plot.setParent(None)
 
     def reset_ltas_plot(self, bands, data):
-        self.ltas_plot = PlotController(abs_units='kHz')
+        self.ltas_plot = PlotController(x_units='Hz', y_label='Amplitude', y_units='dB')
         self.plot_layout.addWidget(self.ltas_plot)
         self.ltas_plot.update(bands, data)
         self.ltas_plot.show()
@@ -129,7 +129,7 @@ class TrainingController (QtGui.QMainWindow):
             , TableColumnModel(name='Date', get_data_func=lambda x: x.creation_date)
             , TableColumnModel(name='Reading', get_data_func=lambda x: x.reading_title)
             , TableColumnModel(name='Recording time', get_data_func=lambda x: x.time_dedicated)
-            , TableColumnModel(name='projection_level', get_data_func=lambda x: projection_level_for_trainings_dict[x])]
+            , TableColumnModel(name='Projection level', get_data_func=lambda x: projection_level_for_trainings_dict[x])]
         trainings = projection_level_for_trainings_dict.keys()
         trainings.sort(key=lambda t: t.number)
         return (header, trainings)
